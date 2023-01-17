@@ -30,10 +30,10 @@ def sma_etf_indy():
     # Get user inputs
     etf = input("\nENTER ONE OF THE TICKERS : ")
     start_date = input("Enter the start date (YYYY-MM-DD) : ")
-    end_date = input("Enter the end date (YYYY-MM-DD) or 'today' : ")
+    end_date = input("Enter the end date (YYYY-MM-DD) or 't' for today : ")
 
     # convert end_date to correct format if user enters 'today'
-    if end_date.upper() == 'TODAY':
+    if end_date.upper() == 'T':
         end_date = date.today()
     else:
         end_date = end_date
@@ -54,7 +54,7 @@ def sma_etf_indy():
 
     plot_sma_indy(df, etf, start_date, end_date)
     
-    delete_temp_files(temp_data)
+    #delete_temp_files(temp_data)
 
 
 while True:

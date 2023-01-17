@@ -30,29 +30,22 @@ def calculate_sma(
         # Convert Datetime formats
         data['Date'] = pd.to_datetime(data['Date'], utc=True)
 
-        # Calculate Gain
-        Delta = data['Close'].diff()
-        # Create Up and Down Columns to keep track of gains and losses and their values
-        Up = Delta.clip(lower=0)
-        Down = (-1)*Delta.clip(upper=0)
-        # Calculate the moving averages
-        sma_up = Up.rolling(14).mean()
-        sma_down = Down.rolling(14).mean()
-        # Calculate the relative strength
-        rs = sma_up / sma_down
-        # Calculate SMA
-        rsi = 100 - (100/(1 + rs))
+        # Calculate SMAs
+        close = data['Close']
+        sma50 = data['Close'].rolling(50).mean()
+        sma100 = data['Close'].rolling(100).mean()
+        sma200 = data['Close'].rolling(200).mean()
     
         # Create a column that tells us if RSI is > 50 or not
-        data.loc[rsi <= 50, 'RSI_test'] = 'N'
-        data.loc[rsi > 50, 'RSI_test'] = 'Y'
-
-        # Remove Rows without RSI value
-        data = data.dropna()
+        data.loc[sma50 < close, '50_SMA_test'] = 'Y'
+        data.loc[sma50 >= close, '50_SMA_test'] = 'N'
+        data.loc[sma100 < close, '100_SMA_test'] = 'Y'
+        data.loc[sma100 >= close, '100_SMA_test'] = 'N'
+        data.loc[sma200 < close, '200_SMA_test'] = 'Y'
+        data.loc[sma200 >= close, '200_SMA_test'] = 'N'
 
         # output a .pkl file
         data.to_pickle(f"C:\Python Projects\SMA Indicator\DATA\{ticker} DATA.pkl")
-
 
 
     except ValueError:

@@ -55,14 +55,14 @@ def get_sma_dist(
             data = pd.DataFrame(data)
 
             # Reduce data frame to only needed columns
-            data = data[['Date','RSI_test']].copy()
+            data = data[['Date', '50_SMA_test']].copy()
 
             # Convert Datetime format
             data['Date'] = pd.to_datetime(data['Date'], utc=True).dt.date
 
             # Rename Column headers
-            new_name = f"{symbol}_rsi_test"
-            data.rename(columns= {'RSI_test':new_name}, inplace = True)
+            new_name = f"{symbol}_50sma_test"
+            data.rename(columns= {'50_SMA_test':new_name}, inplace = True)
             
             # add the RSI test column to the main_df
             main_df = pd.merge(main_df, data, how='outer', on=['Date'])
@@ -81,6 +81,9 @@ def get_sma_dist(
 
     # Remove RSI_test columns
     close_col = f'{etf}_Close'
+    print()
+    print(main_df)
+    print()
     main_df = main_df[['Date', close_col, 'Y', 'N']].copy()
 
     # print a list of failed downloads
