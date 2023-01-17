@@ -55,36 +55,62 @@ def get_sma_dist(
             data = pd.DataFrame(data)
 
             # Reduce data frame to only needed columns
-            data = data[['Date', '50_SMA_test']].copy()
+            data50 = data[['Date', '50_SMA_test']].copy()
+            data100 = data[['Date', '100_SMA_test']].copy()
+            data200 = data[['Date', '200_SMA_test']].copy()
 
             # Convert Datetime format
-            data['Date'] = pd.to_datetime(data['Date'], utc=True).dt.date
+            data50['Date'] = pd.to_datetime(data50['Date'], utc=True).dt.date
+            data100['Date'] = pd.to_datetime(data100['Date'], utc=True).dt.date
+            data200['Date'] = pd.to_datetime(data200['Date'], utc=True).dt.date
 
             # Rename Column headers
             new_name = f"{symbol}_50sma_test"
-            data.rename(columns= {'50_SMA_test':new_name}, inplace = True)
+            data50.rename(columns= {'50_SMA_test':new_name}, inplace = True)
+            new_name = f"{symbol}_100sma_test"
+            data100.rename(columns= {'100_SMA_test':new_name}, inplace = True)
+            new_name = f"{symbol}_200sma_test"
+            data200.rename(columns= {'200_SMA_test':new_name}, inplace = True)
             
             # add the RSI test column to the main_df
-            main_df = pd.merge(main_df, data, how='outer', on=['Date'])
+            main50_df = pd.merge(main_df, data50, how='outer', on=['Date'])
+            main100_df = pd.merge(main_df, data100, how='outer', on=['Date'])
+            main200_df = pd.merge(main_df, data200, how='outer', on=['Date'])
 
         # Add an exception for when there are symbols on the list without available data
         except FileNotFoundError:
             failed_downloads.append(symbol)
             print(f"No data for {symbol}")
 
+    
+    print("\nRAW DATA")
+    print(main50_df)
+    print(main100_df)
+    print(main200_df)
+    print("RAW DATA \n")
+    
     # Select only the columns starting from the third column
     # Get the distribution of values in each row
-    dist_df = main_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
+    dist50_df = main50_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
+    dist100_df = main100_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
+    dist200_df = main200_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
+   
+    print("\nDATA merged")
+    print(main50_df)
+    print(main100_df)
+    print(main200_df)
+    print(" DATA merged\n")
 
     # add the RSI test column to the main_df
-    main_df = pd.concat([main_df, dist_df], axis=1)
+    main50_df = pd.concat([main50_df, dist50_df], axis=1)
+    main100_df = pd.concat([main100_df, dist100_df], axis=1)
+    main200_df = pd.concat([main200_df, dist200_df], axis=1)
 
-    # Remove RSI_test columns
+    # Remove test columns
     close_col = f'{etf}_Close'
-    print()
-    print(main_df)
-    print()
-    main_df = main_df[['Date', close_col, 'Y', 'N']].copy()
+    main50_df = main50_df[['Date', close_col, 'Y', 'N']].copy()
+    main100_df = main50_df[['Date', close_col, 'Y', 'N']].copy()
+    main200_df = main50_df[['Date', close_col, 'Y', 'N']].copy()
 
     # print a list of failed downloads
     if failed_downloads:
@@ -94,5 +120,7 @@ def get_sma_dist(
     else:
         print("No Failed Downloads\n")
 
-    # print main_df to pkl
-    main_df.to_pickle(f"C:\Python Projects\SMA Indicator\DATA\ 000_FINAL_DATA.pkl")
+    # print main_dfs to pkl
+    main50_df.to_pickle("C:\Python Projects\SMA Indicator\DATA\ 050_FINAL_DATA.pkl")
+    main100_df.to_pickle("C:\Python Projects\SMA Indicator\DATA\ 100_FINAL_DATA.pkl")
+    main200_df.to_pickle("C:\Python Projects\SMA Indicator\DATA\ 200_FINAL_DATA.pkl")

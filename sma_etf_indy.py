@@ -47,14 +47,23 @@ def sma_etf_indy():
     )
 
     # Declare datasource
-    df = pd.read_pickle(f"C:\Python Projects\SMA Indicator\DATA\ 000_FINAL_DATA.pkl") 
+    df50 = pd.read_pickle("C:\Python Projects\SMA Indicator\DATA\ 050_FINAL_DATA.pkl")
+    df100 = pd.read_pickle("C:\Python Projects\SMA Indicator\DATA\ 100_FINAL_DATA.pkl")
+    df200 = pd.read_pickle("C:\Python Projects\SMA Indicator\DATA\ 200_FINAL_DATA.pkl")
     # Set datasource as a dataframe and set date column as the index
-    df = pd.DataFrame(df)
-    df.set_index('Date', inplace=True)
+    df50 = pd.DataFrame(df50)
+    df100 = pd.DataFrame(df200)
+    df200 = pd.DataFrame(df200)   
 
-    plot_sma_indy(df, etf, start_date, end_date)
-    
-    #delete_temp_files(temp_data)
+    df50.set_index('Date', inplace=True)
+    df100.set_index('Date', inplace=True)
+    df200.set_index('Date', inplace=True)
+
+    plot_sma_indy(df50, etf, start_date, end_date)
+    plot_sma_indy(df100, etf, start_date, end_date)
+    plot_sma_indy(df200, etf, start_date, end_date)
+
+    delete_temp_files(temp_data)
 
 
 while True:
