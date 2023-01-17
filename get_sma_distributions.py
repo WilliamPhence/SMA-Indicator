@@ -65,14 +65,14 @@ def get_sma_dist(
             data200['Date'] = pd.to_datetime(data200['Date'], utc=True).dt.date
 
             # Rename Column headers
-            new_name = f"{symbol}_50sma_test"
+            new_name = f"{symbol}50sma_test"
             data50.rename(columns= {'50_SMA_test':new_name}, inplace = True)
-            new_name = f"{symbol}_100sma_test"
+            new_name = f"{symbol}100sma_test"
             data100.rename(columns= {'100_SMA_test':new_name}, inplace = True)
-            new_name = f"{symbol}_200sma_test"
+            new_name = f"{symbol}200sma_test"
             data200.rename(columns= {'200_SMA_test':new_name}, inplace = True)
             
-            # add the RSI test column to the main_df
+            # add the test column to the main_df
             main50_df = pd.merge(main_df, data50, how='outer', on=['Date'])
             main100_df = pd.merge(main_df, data100, how='outer', on=['Date'])
             main200_df = pd.merge(main_df, data200, how='outer', on=['Date'])
