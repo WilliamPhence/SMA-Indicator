@@ -59,9 +59,9 @@ def sma_etf_indy():
     df100.set_index('Date', inplace=True)
     df200.set_index('Date', inplace=True)
 
-    plot_sma_indy(df50, etf, start_date, end_date)
-    plot_sma_indy(df100, etf, start_date, end_date)
-    plot_sma_indy(df200, etf, start_date, end_date)
+    plot_sma_indy(df50, etf, start_date, end_date, interval=50)
+    plot_sma_indy(df100, etf, start_date, end_date, interval=100)
+    plot_sma_indy(df200, etf, start_date, end_date, interval=200)
 
     delete_temp_files(temp_data)
 

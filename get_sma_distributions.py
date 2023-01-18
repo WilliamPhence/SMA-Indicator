@@ -21,19 +21,19 @@ def get_sma_dist(
     # put data into main_df
     main_df = pd.read_pickle(f"C:\Python Projects\SMA Indicator\DATA\{etf} DATA.pkl")
     main_df = pd.DataFrame(main_df)
-
     # Change Indexing from dates to integers
-    main_df = main_df.reset_index(names="Date")
-    
+    main_df = main_df.reset_index(names="Date")    
     # Convert Datetime format
     main_df['Date'] = pd.to_datetime(main_df['Date'], utc=True).dt.date
+    # Make 3 identical copies of main_df
+    main50_df = main_df
+    main100_df = main_df
+    main200_df = main_df
 
     # create an empty list to store symbols with failed downloads
     failed_downloads = []
-
     # Get the list of symbols for the components of the ETF chosen
-    get_symbol_list(etf)
-    
+    get_symbol_list(etf)    
     symbols = pd.read_pickle("C:\Python Projects\SMA Indicator\DATA\symbol list.pkl")
 
     # Run RSI function for each symbol
@@ -73,33 +73,21 @@ def get_sma_dist(
             data200.rename(columns= {'200_SMA_test':new_name}, inplace = True)
             
             # add the test column to the main_df
-            main50_df = pd.merge(main_df, data50, how='outer', on=['Date'])
-            main100_df = pd.merge(main_df, data100, how='outer', on=['Date'])
-            main200_df = pd.merge(main_df, data200, how='outer', on=['Date'])
+            main50_df = pd.merge(main50_df, data50, how='outer', on=['Date'])
+            main100_df = pd.merge(main100_df, data100, how='outer', on=['Date'])
+            main200_df = pd.merge(main200_df, data200, how='outer', on=['Date'])
 
         # Add an exception for when there are symbols on the list without available data
         except FileNotFoundError:
             failed_downloads.append(symbol)
             print(f"No data for {symbol}")
-
     
-    print("\nRAW DATA")
-    print(main50_df)
-    print(main100_df)
-    print(main200_df)
-    print("RAW DATA \n")
     
     # Select only the columns starting from the third column
     # Get the distribution of values in each row
     dist50_df = main50_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
     dist100_df = main100_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
     dist200_df = main200_df.iloc[:, 2:].apply(lambda x: x.value_counts(normalize=True), axis=1)
-   
-    print("\nDATA merged")
-    print(main50_df)
-    print(main100_df)
-    print(main200_df)
-    print(" DATA merged\n")
 
     # add the RSI test column to the main_df
     main50_df = pd.concat([main50_df, dist50_df], axis=1)
@@ -109,8 +97,9 @@ def get_sma_dist(
     # Remove test columns
     close_col = f'{etf}_Close'
     main50_df = main50_df[['Date', close_col, 'Y', 'N']].copy()
-    main100_df = main50_df[['Date', close_col, 'Y', 'N']].copy()
-    main200_df = main50_df[['Date', close_col, 'Y', 'N']].copy()
+    main100_df = main100_df[['Date', close_col, 'Y', 'N']].copy()
+    main200_df = main200_df[['Date', close_col, 'Y', 'N']].copy()
+
 
     # print a list of failed downloads
     if failed_downloads:

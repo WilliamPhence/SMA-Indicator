@@ -4,7 +4,7 @@ import matplotlib.dates as mdates
 
 
 # Declare Plot variables
-def plot_sma_indy(df, etf, start_date, end_date):
+def plot_sma_indy(df, etf, start_date, end_date, interval):
     # Declare figure and axes variables
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
@@ -17,7 +17,7 @@ def plot_sma_indy(df, etf, start_date, end_date):
             )
     line_sma_y, = ax2.plot(
             df['Y'], 
-            label='%'+f' of {etf} Components w/ SMA over 50',
+            label='%'+f' of {etf} Components w/ over {interval} SMA',
             c='red'
             )
 
@@ -40,7 +40,7 @@ def plot_sma_indy(df, etf, start_date, end_date):
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%b\n%Y'))
     ax1.set_title(f'{etf.upper()} vs {etf.upper()} Components SMA Distribution ({start_date}) to ({end_date})')
     ax1.set_ylabel(f"{etf.upper()}")
-    ax2.set_ylabel('%'+f' of {etf.upper()} Comp. w/ SMA > 50')
+    ax2.set_ylabel('%'+f' of {etf.upper()} Comp. > {interval} SMA')
     ax1.set_xlabel('Dates (Month-Year)')
 
     print(df)
