@@ -6,14 +6,14 @@ from datetime import datetime
 #This is currently not in production
 yf.pdr_override()
 
-def get_today(symbol):    
+def get_today(symbol):
 
-    # Get the most recent daily close price
-    #closing_price = stock.info['regularMarketPreviousClose']
-    closing_price = pdr.get_data_yahoo(symbol)["Close"]
-    print(closing_price)
-    closing_price = int(closing_price)
-    print(closing_price)
+    stock = yf.Ticker(symbol)
+    # Download the most recent trading data for the stock
+    data = stock.history(period="1d")
+
+    # Get the most recent closing price
+    closing_price = data["Close"][-1]
     today = datetime.today().date()
 
     df = pd.DataFrame({
