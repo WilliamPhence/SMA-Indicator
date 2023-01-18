@@ -6,7 +6,6 @@ from datetime import date
 import pandas as pd
 
 
-
 def sma_etf_indy():
 
     # Declare path for the temp data to be deleted after plots are shown and saved
@@ -68,8 +67,8 @@ def sma_etf_indy():
 
 while True:
     sma_etf_indy()
-    repeat = input("Are you done? Y/N : ")
-    if repeat.upper() == "N":
+    repeat = input("Press 'Enter' to go again : ")
+    if repeat.upper() == "":
         continue
-    elif repeat.upper() == 'Y':
+    else:
         break
