@@ -46,5 +46,4 @@ def plot_sma_indy(df, etf, start_date, end_date, interval):
     print(df)
 
     # Save the figures and show the plots    
-    plt.savefig(f"C:\Python Projects\SMA Indicator\\figures\{etf} SMA Distributions {start_date} - {end_date}.png", dpi=1000, bbox_inches='tight', pad_inches=0.5)
-    plt.show()
+    plt.savefig(f"C:\Python Projects\SMA Indicator\\figures\{etf.upper()} {interval}-SMA Distributions {start_date} - {end_date}.png", dpi=1000, bbox_inches='tight', pad_inches=0.5)

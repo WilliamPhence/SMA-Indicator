@@ -67,7 +67,7 @@ def sma_etf_indy():
 
 while True:
     sma_etf_indy()
-    repeat = input("Press 'Enter' to go again : ")
+    repeat = input("Press 'Enter' to go again\nEnter anything else to exit : ")
     if repeat.upper() == "":
         continue
     else:
