@@ -51,8 +51,12 @@ def sma_etf_indy():
     df200 = pd.read_pickle("C:\Python Projects\SMA Indicator\DATA\ 200_FINAL_DATA.pkl")
     # Set datasource as a dataframe and set date column as the index
     df50 = pd.DataFrame(df50)
-    df100 = pd.DataFrame(df200)
-    df200 = pd.DataFrame(df200)   
+    df100 = pd.DataFrame(df100)
+    df200 = pd.DataFrame(df200)
+
+    df50.dropna(inplace=True)
+    df100.dropna(inplace=True)
+    df200.dropna(inplace=True)
 
     df50.set_index('Date', inplace=True)
     df100.set_index('Date', inplace=True)

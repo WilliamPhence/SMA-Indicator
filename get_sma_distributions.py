@@ -100,7 +100,6 @@ def get_sma_dist(
     main100_df = main100_df[['Date', close_col, 'Y', 'N']].copy()
     main200_df = main200_df[['Date', close_col, 'Y', 'N']].copy()
 
-
     # print a list of failed downloads
     if failed_downloads:
         print("\nList of failed downloads:")
