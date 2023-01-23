@@ -6,8 +6,6 @@ from datetime import date
 # custom functions
 
 
-
-
 def calculate_sma(
         start_date,
         end_date,
@@ -44,8 +42,7 @@ def calculate_sma(
         data.loc[sma200 < close, '200_SMA_test'] = 'Y'
         data.loc[sma200 >= close, '200_SMA_test'] = 'N'
 
-        # output a .pkl file
-        data.to_pickle(f"C:\Python Projects\SMA Indicator\DATA\{ticker} DATA.pkl")
+        return data
 
 
     except ValueError:
