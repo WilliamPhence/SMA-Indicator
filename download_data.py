@@ -35,5 +35,5 @@ def download_data(
     new_name = f"{symbols}_Close"
     data.rename(columns={'Close':new_name}, inplace=True)
    
-    # write to a .pkl file
-    data.to_pickle(f"C:\Python Projects\SMA Indicator\DATA\{symbols} DATA.pkl")
+    # return final data
+    return data

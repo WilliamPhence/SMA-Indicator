@@ -12,14 +12,13 @@ def get_sma_dist(
         etf,
     ):
     # Grab user selected ETF data
-    download_data(        
+    main_df = download_data(        
         start_date,
         end_date,
         etf,
     )
 
     # put data into main_df
-    main_df = pd.read_pickle(f"C:\Python Projects\SMA Indicator\DATA\{etf} DATA.pkl")
     main_df = pd.DataFrame(main_df)
     # Change Indexing from dates to integers
     main_df = main_df.reset_index(names="Date")    
@@ -41,16 +40,14 @@ def get_sma_dist(
 
         # Download data for all symbols and see if RSI is over 50 or not
         # This function also creates a csv file for each symbol that is used in the try block below
-        calculate_sma(
+        data = calculate_sma(
                 start_date,
                 end_date, 
                 symbol
         )
 
         # Add each Symbol's RSI_test results to a main data frame that contains SPY & Date Data
-        try: 
-            # try using the data frame
-            data = pd.read_pickle(f"C:\Python Projects\SMA Indicator\DATA\{symbol} DATA.pkl")            
+        try:    
             # pass each new pkl file into a temporary data frame
             data = pd.DataFrame(data)
 
@@ -78,7 +75,7 @@ def get_sma_dist(
             main200_df = pd.merge(main200_df, data200, how='outer', on=['Date'])
 
         # Add an exception for when there are symbols on the list without available data
-        except FileNotFoundError:
+        except KeyError:
             failed_downloads.append(symbol)
             print(f"No data for {symbol}")
     
