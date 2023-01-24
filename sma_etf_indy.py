@@ -1,7 +1,6 @@
 # Import Libraries and functions
 from get_sma_distributions import get_sma_dist
 from plot_sma_indicator import plot_sma_indy
-from delete_temp_files import delete_temp_files
 from datetime import date
 import pandas as pd
 
@@ -65,8 +64,6 @@ def sma_etf_indy():
     plot_sma_indy(df50, etf, start_date, end_date, interval=50)
     plot_sma_indy(df100, etf, start_date, end_date, interval=100)
     plot_sma_indy(df200, etf, start_date, end_date, interval=200)
-
-    delete_temp_files(temp_data)
 
 
 while True:

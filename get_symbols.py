@@ -7,6 +7,10 @@ def get_symbol_list(etf):
     if etf == 'SPY':
         # Get the list of symbols for the components of the ETF chosen
         symbols = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')[0]['Symbol'].tolist()
+        
+        symbols = sorted(symbols)
+        # return symbols
+        return symbols
     
     elif etf == 'QQQ':
         # Send a request to the URL
@@ -16,15 +20,18 @@ def get_symbol_list(etf):
         reader = csv.reader(response.text.splitlines())
 
         # Write the data to a new CSV file
-        with open('C:\Python Projects\SMA Indicator\DATA\qqq_holdings.csv', 'w') as csvfile:
+        with open('C:\Python Projects\SMA Indicator\STATIC DATA\qqq_holdings.csv', 'w') as csvfile:
             writer = csv.writer(csvfile)
             for row in reader:
                 writer.writerow(row)
 
-        symbols = pd.read_csv("C:\Python Projects\SMA Indicator\DATA\qqq_holdings.csv")
+        symbols = pd.read_csv("C:\Python Projects\SMA Indicator\STATIC DATA\qqq_holdings.csv")
         symbols = pd.DataFrame(symbols)
 
         symbols = symbols['Holding Ticker'].copy()
+        symbols = sorted(symbols)
+        # return symbols
+        return symbols
     
     elif etf == 'IWM':
         # Declare datafile location
@@ -36,8 +43,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\russell_2000.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLE":
 
@@ -50,8 +58,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xle.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLY":
                 # Declare datafile location
@@ -63,8 +72,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xly.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLP":
                 # Declare datafile location
@@ -76,8 +86,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlp.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLV":
         # Declare datafile location
@@ -89,8 +100,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlv.pkl") 
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLB":
                 # Declare datafile location
@@ -102,8 +114,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlb.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLRE":
                 # Declare datafile location
@@ -115,8 +128,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlre.pkl")  
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLK":
                 # Declare datafile location
@@ -128,8 +142,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlk.pkl")  
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLU":
                 # Declare datafile location
@@ -141,8 +156,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlu.pkl")   
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
     
     elif etf == "XLC":
                 # Declare datafile location
@@ -154,8 +170,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xlc.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
 
     elif etf == "XLI":
                 # Declare datafile location
@@ -167,8 +184,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xli.pkl")
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols
 
     elif etf == "XLF":
                 # Declare datafile location
@@ -180,16 +198,9 @@ def get_symbol_list(etf):
         # Copy the list of tickers
         symbols = symbols['Ticker'].copy()
 
-        # Save list to a pkl file
-        symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\\xli.pkl")  
+        # return symbols
+        symbols = sorted(symbols)
+        return symbols     
     
     else:
         print("Not an acceptable input, try again")
-       
-  
-    # sort list alphabetically
-    symbols = sorted(symbols)
-    # convert list to pandas series
-    symbols = pd.Series(symbols)
-    # save series to pkl file
-    symbols.to_pickle("C:\Python Projects\SMA Indicator\DATA\symbol list.pkl")
