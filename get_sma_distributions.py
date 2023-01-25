@@ -34,6 +34,7 @@ def get_sma_dist(
     
     # Get the list of symbols for the components of the ETF chosen    
     symbols = get_symbol_list(etf)
+    symbols = [symbol.rstrip() for symbol in symbols]    
 
     # Run RSI function for each symbol
     for symbol in symbols:

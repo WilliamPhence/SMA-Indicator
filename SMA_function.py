@@ -2,14 +2,15 @@
 import pandas as pd
 from pandas_datareader import data as pdr
 import yfinance as yf
-from datetime import date
+import datetime
 # custom functions
+from get_today import get_today
 
 
 def calculate_sma(
         start_date,
         end_date,
-        ticker
+        symbol
     ):
 
     try:
@@ -17,13 +18,23 @@ def calculate_sma(
         yf.pdr_override()
 
         # Obtain data, show terminal output for each download attempt
-        print(f"Getting Yahoo Data for {ticker}....")
-        data = pdr.get_data_yahoo(ticker, start_date, end_date)['Close']
+        print(f"Getting Yahoo Data for {symbol}....")
+        data = pdr.get_data_yahoo(symbol, start_date, end_date)['Close']
         # Take the data we just downloaded and put it into a pandas dataframe
         data = pd.DataFrame(data)
 
         # Change Indexing from dates to integers
         data = data.reset_index(names="Date")
+
+        # Get today's date and time to see if we need to get today's data
+        now = datetime.datetime.now()
+        weekday = now.weekday()
+        hour = now.hour
+        if weekday >= 1 and weekday <= 4:
+            if hour >= 17:
+                today = get_today(symbol)
+                data = pd.concat([data, today], ignore_index=True)
+                pass
 
         # Convert Datetime formats
         data['Date'] = pd.to_datetime(data['Date'], utc=True)
@@ -46,6 +57,6 @@ def calculate_sma(
 
 
     except ValueError:
-        print(f"Failed to download {ticker} DATA")
+        print(f"Failed to download {symbol} DATA")
         print(data)
 
