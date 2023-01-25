@@ -5,10 +5,11 @@ import pandas as pd
 
 
 # Declare Plot variables
-def plot_sma_indy(df, etf, start_date, end_date, interval):
+def plot_sma_indy(df, etf, interval):
 
     df = pd.DataFrame(df)
     first_date = df.index[0]
+    last_date = df.index[-1]
 
     # Declare figure and axes variables
     fig, ax1 = plt.subplots()
@@ -43,7 +44,7 @@ def plot_sma_indy(df, etf, start_date, end_date, interval):
     # Format the axes
     ax1.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
     ax1.xaxis.set_major_formatter(mdates.DateFormatter('%b\n%Y'))
-    ax1.set_title(f'{etf.upper()} vs {etf.upper()} Components SMA Distribution ({first_date}) to ({end_date})')
+    ax1.set_title(f'{etf.upper()} vs {etf.upper()} Components SMA Distribution ({first_date}) to ({last_date})')
     ax1.set_ylabel(f"{etf.upper()}")
     ax2.set_ylabel('%'+f' of {etf.upper()} Comp. > {interval} SMA')
     ax1.set_xlabel('Dates (Month-Year)')
@@ -51,4 +52,4 @@ def plot_sma_indy(df, etf, start_date, end_date, interval):
     print(df)
 
     # Save the figures and show the plots    
-    plt.savefig(f"C:\\Users\dvjkr\Pictures\charts\{etf.upper()} {interval}-SMA Distributions {first_date} - {end_date}.png", dpi=1000, bbox_inches='tight', pad_inches=0.5)
+    plt.savefig(f"C:\\Users\dvjkr\Pictures\charts\{etf.upper()} {interval}-SMA Distributions {first_date} - {last_date}.png", dpi=1000, bbox_inches='tight', pad_inches=0.5)

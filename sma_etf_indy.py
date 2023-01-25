@@ -36,7 +36,6 @@ def sma_etf_indy():
     else:
         end_date = end_date
 
-
     # call get_rsi_dist function and pass through user inputs
     get_sma_dist(
             start_date,
@@ -61,9 +60,9 @@ def sma_etf_indy():
     df100.set_index('Date', inplace=True)
     df200.set_index('Date', inplace=True)
 
-    plot_sma_indy(df50, etf, start_date, end_date, interval=50)
-    plot_sma_indy(df100, etf, start_date, end_date, interval=100)
-    plot_sma_indy(df200, etf, start_date, end_date, interval=200)
+    plot_sma_indy(df50, etf, interval=50)
+    plot_sma_indy(df100, etf, interval=100)
+    plot_sma_indy(df200, etf, interval=200)
 
 
 while True:
