@@ -10,7 +10,7 @@ from get_today import get_today
 def calculate_sma(
         start_date,
         end_date,
-        symbol
+        symbol,
     ):
 
     try:
@@ -18,7 +18,6 @@ def calculate_sma(
         yf.pdr_override()
 
         # Obtain data, show terminal output for each download attempt
-        print(f"Getting Yahoo Data for {symbol}....")
         data = pdr.get_data_yahoo(symbol, start_date, end_date)['Close']
         # Take the data we just downloaded and put it into a pandas dataframe
         data = pd.DataFrame(data)

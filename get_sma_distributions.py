@@ -34,17 +34,20 @@ def get_sma_dist(
     
     # Get the list of symbols for the components of the ETF chosen    
     symbols = get_symbol_list(etf)
-    symbols = [symbol.rstrip() for symbol in symbols]    
-
+    symbols = [symbol.rstrip() for symbol in symbols]
+    symbol_count = int(len(symbols)) 
+    i = 0
     # Run RSI function for each symbol
     for symbol in symbols:
-
+        
+        i = i + 1
+        print(f"Request {i} of {symbol_count} for {symbol}....")
         # Download data for all symbols and see if RSI is over 50 or not
         # This function also creates a csv file for each symbol that is used in the try block below
         data = calculate_sma(
                 start_date,
                 end_date, 
-                symbol
+                symbol,
         )
 
         # Add each Symbol's RSI_test results to a main data frame that contains SPY & Date Data
@@ -91,6 +94,7 @@ def get_sma_dist(
     main50_df = pd.concat([main50_df, dist50_df], axis=1)
     main100_df = pd.concat([main100_df, dist100_df], axis=1)
     main200_df = pd.concat([main200_df, dist200_df], axis=1)
+
 
     # Remove test columns
     close_col = f'{etf}_Close'
