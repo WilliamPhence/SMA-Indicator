@@ -20,10 +20,10 @@ def get_sma_dist(
 
     # put data into main_df
     main_df = pd.DataFrame(main_df)
-    # Change Indexing from dates to integers
-    main_df = main_df.reset_index(names="Date")    
-    # Convert Datetime format
-    main_df['Date'] = pd.to_datetime(main_df['Date'], utc=True).dt.date
+    # Rename close column in main
+    new_name = f"{etf}_Close"
+    main_df.rename(columns={'Close':new_name}, inplace=True)   
+
     # Make 3 identical copies of main_df
     main50_df = main_df
     main100_df = main_df
@@ -36,12 +36,11 @@ def get_sma_dist(
     symbols = get_symbol_list(etf)
     symbols = [symbol.rstrip() for symbol in symbols]
     symbol_count = int(len(symbols)) 
-    i = 0
+
     # Run RSI function for each symbol
-    for symbol in symbols:
+    for i, symbol in enumerate(symbols):
         
-        i = i + 1
-        print(f"Request {i} of {symbol_count} for {symbol}....")
+        print(f"Request {i + 1} of {symbol_count} for {symbol}....")
         # Download data for all symbols and see if RSI is over 50 or not
         # This function also creates a csv file for each symbol that is used in the try block below
         data = calculate_sma(
